@@ -6,25 +6,65 @@
 
   <Page id="page" title="Upload Students Data" class="sapUiContentPadding">
     <content>
-      <VBox class="customVBox sapUiMediumMargin sapUiSmallPadding sapUiResponsiveMargin">
-        <Title text="Excel Upload - Students Data" level="H2" class="sapUiTinyMarginBottom" />
+      <MessageStrip text="Welcome to the Student Upload Portal!" type="Information" showIcon="true" />
+       <VBox class="customVBox sapUiMediumMargin sapUiSmallPadding sapUiResponsiveMargin">
+    
+        <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+          <!-- Logo Image -->
+          <Image src="images/logo.png" width="80px" height="80px" class="sapUiSmallMarginEnd" />
 
-        <u:FileUploader
-          id="fileUploader"
-          name="myFileUpload"
-          fileType="xlsx"
-          uploadOnChange="false"
-          tooltip="Upload your Excel file"
-          change="handleFileChange"
-          class="sapUiSmallMarginBottom" />
-
-        <HBox class="sapUiSmallMarginBottom" justifyContent="Start" alignItems="Center">
-          <Button text="Upload File" press="handleUploadPress" type="Emphasized" />
-          <Button text="Post Data to DB" press="onPostData" type="Accept" class="sapUiTinyMarginBegin" />
-          <Button text="Export to Excel" press="onExportToExcel" type="Transparent" class="sapUiTinyMarginBegin" />
-          <Button text="Download All Students" press="onDownloadFromDB" type="Transparent" class="sapUiTinyMarginBegin" />
+          <!-- VBox for Title and FileUploader -->
+          <VBox>
+            <Title text="Excel Upload - Students Data" level="H2" class="sapUiTinyMarginBottom" />
+            <u:FileUploader
+              id="fileUploader"
+              name="myFileUpload"
+              fileType="xlsx"
+              uploadOnChange="false"
+              tooltip="Upload your Excel file"
+              change="handleFileChange"
+              class="sapUiSmallMarginBottom" />
+          </VBox>
         </HBox>
 
+        <!-- Action Buttons -->
+        <HBox class="sapUiTinyMarginBottom" justifyContent="Start" alignItems="Center" wrap="Wrap">
+          <Button
+            text="Upload File"
+            press="onPostData"
+            type="Emphasized"
+            icon="sap-icon://upload"
+            class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+
+          <Button
+            text="Export to Excel"
+            press="onExportToExcel"
+            type="Attention"
+            icon="sap-icon://excel-attachment"
+            class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+
+          <Button
+            text="Download All Students"
+            press="onDownloadFromDB"
+            type="Accept"
+            icon="sap-icon://download"
+            class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+
+          <Button
+            text="Preview PDF"
+            press="onPreviewPDF"
+            type="Critical"
+            icon="sap-icon://print"
+            class="sapUiTinyMarginBottom" />
+        </HBox>
+        <!-- <PDFViewer
+            id="pdfViewer"
+            title="Student Data PDF"
+            height="600px"
+            width="100%"
+            showDownloadButton="true" /> -->
+        
+        <!--  GET Upload data and bind to table for display on page
         <Table
           id="excelTable"
           visible="false"
@@ -54,6 +94,7 @@
             </ColumnListItem>
           </items>
         </Table>
+       -->
       </VBox>
     </content>
   </Page>

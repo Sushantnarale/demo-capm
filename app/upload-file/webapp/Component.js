@@ -1,6 +1,8 @@
 sap.ui.define([
     "sap/ui/core/UIComponent",
-    "uploadfile/model/models"
+    "uploadfile/model/models",
+    "sap/m/PDFViewer"
+
 ], (UIComponent, models) => {
     "use strict";
 
