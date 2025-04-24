@@ -1,1 +1,7 @@
 /* Enter your custom styles here */
+.customVBox {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fafafa;
+    padding: 16px;
+}

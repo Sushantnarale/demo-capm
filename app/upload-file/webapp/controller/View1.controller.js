@@ -36,7 +36,6 @@ sap.ui.define([
         const sheet = workbook.Sheets[firstSheet];
         const jsonData = XLSX.utils.sheet_to_json(sheet);
 
-        // Validate and filter rows
         const validRows = [];
         const invalidRows = [];
 
@@ -44,7 +43,7 @@ sap.ui.define([
           if (row.ID && row.Name && row.Email && row.Department && row.Year && row.Contact) {
             validRows.push(row);
           } else {
-            invalidRows.push({ row: index + 2, data: row }); // +2 for Excel row index
+            invalidRows.push({ row: index + 2, data: row });
           }
         });
 
@@ -58,8 +57,6 @@ sap.ui.define([
           MessageBox.warning(`Some rows have missing fields and were skipped:\n` +
             invalidRows.map(e => `Row ${e.row}`).join(", "));
         }
-
-        console.log("Valid Data to Upload:", validRows);
       };
 
       reader.readAsBinaryString(file);
@@ -112,6 +109,60 @@ sap.ui.define([
           errorMessages.join("\n")
         );
       }
+    },
+
+    onExportToExcel: function () {
+      const data = this.getView().getModel()?.getProperty("/dataArray") || [];
+      if (!data.length) {
+        MessageToast.show("No data to export.");
+        return;
+      }
+
+      const worksheet = XLSX.utils.json_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
+
+      XLSX.writeFile(workbook, "StudentsData.xlsx");
+    },
+
+
+    
+    onDownloadFromDB: function () {
+      const serviceUrl = this.getOwnerComponent().getModel().sServiceUrl;
+      const that = this;
+    
+      $.ajax({
+        url: serviceUrl + "/Students",
+        method: "GET",
+        success: function (data) {
+          if (data && data.value && data.value.length > 0) {
+            // Convert JSON to worksheet
+            const worksheet = XLSX.utils.json_to_sheet(data.value);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
+    
+            // Export to Excel file
+            const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+            const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+    
+            // Create download link
+            const link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob);
+            link.download = "All_Students.xlsx";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+    
+            MessageToast.show("Download started.");
+          } else {
+            MessageToast.show("No data available to download.");
+          }
+        },
+        error: function () {
+          MessageBox.error("Failed to fetch students from database.");
+        }
+      });
     }
+    
   });
 });

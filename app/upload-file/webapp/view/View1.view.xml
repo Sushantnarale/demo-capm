@@ -4,55 +4,57 @@
   xmlns:u="sap.ui.unified"
   xmlns="sap.m">
 
-<Page id="page" title="Upload Students Data" class="sapUiContentPadding">
-  <content>
-    <VBox class="sapUiMediumMargin">
-      <Title text="Excel Upload - Students Data" level="H2" />
-      <u:FileUploader
-        id="fileUploader"
-        name="myFileUpload"
-        fileType="xlsx"
-        uploadOnChange="false"
-        tooltip="Upload your Excel file"
-        change="handleFileChange" />
+  <Page id="page" title="Upload Students Data" class="sapUiContentPadding">
+    <content>
+      <VBox class="customVBox sapUiMediumMargin sapUiSmallPadding sapUiResponsiveMargin">
+        <Title text="Excel Upload - Students Data" level="H2" class="sapUiTinyMarginBottom" />
 
-      <HBox class="sapUiSmallMarginTop">
-        <Button text="Upload File" press="handleUploadPress" type="Emphasized" />
-        <Button text="Post Data to DB" press="onPostData" type="Accept" class="sapUiTinyMarginBegin" />
-      </HBox>
+        <u:FileUploader
+          id="fileUploader"
+          name="myFileUpload"
+          fileType="xlsx"
+          uploadOnChange="false"
+          tooltip="Upload your Excel file"
+          change="handleFileChange"
+          class="sapUiSmallMarginBottom" />
 
-      <Table
-        id="excelTable"
-        visible="false"
-        inset="false"
-        growing="true"
-        growingScrollToLoad="true"
-        items="{ path: '/dataArray' }">
+        <HBox class="sapUiSmallMarginBottom" justifyContent="Start" alignItems="Center">
+          <Button text="Upload File" press="handleUploadPress" type="Emphasized" />
+          <Button text="Post Data to DB" press="onPostData" type="Accept" class="sapUiTinyMarginBegin" />
+          <Button text="Export to Excel" press="onExportToExcel" type="Transparent" class="sapUiTinyMarginBegin" />
+          <Button text="Download All Students" press="onDownloadFromDB" type="Transparent" class="sapUiTinyMarginBegin" />
+        </HBox>
 
-        <columns>
-          <Column><Text text="ID" /></Column>
-          <Column><Text text="Name" /></Column>
-          <Column><Text text="Email" /></Column>
-          <Column><Text text="Department" /></Column>
-          <Column><Text text="Year" /></Column>
-          <Column><Text text="Contact" /></Column>
-        </columns>
-
-        <items>
-          <ColumnListItem>
-            <cells>
-              <Text text="{ID}" />
-              <Text text="{Name}" />
-              <Text text="{Email}" />
-              <Text text="{Department}" />
-              <Text text="{Year}" />
-              <Text text="{Contact}" />
-            </cells>
-          </ColumnListItem>
-        </items>
-      </Table>
-    </VBox>
-  </content>
-</Page>
-
+        <Table
+          id="excelTable"
+          visible="false"
+          inset="false"
+          growing="true"
+          growingScrollToLoad="true"
+          items="{ path: '/dataArray' }"
+          class="sapUiSmallMarginTop">
+          <columns>
+            <Column><Text text="ID" /></Column>
+            <Column><Text text="Name" /></Column>
+            <Column><Text text="Email" /></Column>
+            <Column><Text text="Department" /></Column>
+            <Column><Text text="Year" /></Column>
+            <Column><Text text="Contact" /></Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <cells>
+                <Text text="{ID}" />
+                <Text text="{Name}" />
+                <Text text="{Email}" />
+                <Text text="{Department}" />
+                <Text text="{Year}" />
+                <Text text="{Contact}" />
+              </cells>
+            </ColumnListItem>
+          </items>
+        </Table>
+      </VBox>
+    </content>
+  </Page>
 </mvc:View>
